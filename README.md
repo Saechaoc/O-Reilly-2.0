@@ -1,4 +1,4 @@
-
+# Entity Relationship for SQL Database
 ```mermaid
 erDiagram
     address {
