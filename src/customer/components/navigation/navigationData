@@ -1,0 +1,183 @@
+const navigation = {
+  categories: [
+    {
+      id: "engine",
+      name: "Engine",
+      featured: [
+        {
+          name: "Engine Kits",
+          href: "#",
+          imageSrc:
+            "https://images.oreillyauto.com/parts/img/large/edb/002086_v1.jpg",
+          imageAlt: "Top End Edelbrock Performer RPM Kit - 2086",
+        },
+        {
+          name: "Filters",
+          href: "#",
+          imageSrc:
+            "https://images.oreillyauto.com/parts/img/large/wix/57356.jpg",
+          imageAlt: "Different types of engine filters.",
+        },
+      ],
+      sections: [
+        {
+          id: "components",
+          name: "Components & Parts",
+          items: [
+            { name: "Belts & Hoses", href: "#" },
+            { name: "Camshafts & Timing", href: "#" },
+            { name: "Connecting Rods, Pistons & Rings", href: "#" },
+            { name: "Cylinder Sleeve (Universal)", href: "#" },
+            { name: "Engine Oil Drain Plug", href: "#" },
+            { name: "Engine Gaskets", href: "#" },
+            { name: "Browse All", href: "#" },
+          ],
+        },
+        {
+          id: "maintenance-care",
+          name: "Maintenance & Care",
+          items: [
+            { name: "Air Filters", href: "#" },
+            { name: "Engine Oil", href: "#" },
+            { name: "Oil Filters", href: "#" },
+            { name: "Spark Plugs", href: "#" },
+            { name: "Timing Belts/Chains", href: "#" },
+            { name: "Browse All", href: "#" },
+          ],
+        },
+        {
+          id: "performance-upgrades",
+          name: "Performance & Upgrades",
+          items: [
+            { name: "Cold Air Intakes", href: "#" },
+            { name: "Performance Chips & Tuners", href: "#" },
+            { name: "Performance Exhaust Systems", href: "#" },
+            { name: "Turbochargers & Superchargers", href: "#" },
+            { name: "Upgraded Camshafts", href: "#" },
+            { name: "Browse All", href: "#" },
+          ],
+        },
+      ],
+    },
+    {
+      id: "accessories",
+      name: "Accessories & Electronics",
+      featured: [
+        {
+          name: "Brake Pads",
+          href: "#",
+          imageSrc:
+            "https://images.oreillyauto.com/parts/img/large/acd/171-1186_primary.jpg",
+          imageAlt: "Different types of brake pads.",
+        },
+        {
+          name: "Rotors",
+          href: "#",
+          imageSrc:
+            "https://images.oreillyauto.com/parts/img/large/bbr/orly_56825rgs_202_ang_primary.jpg",
+          imageAlt: "Shiny brake rotors.",
+        },
+      ],
+      sections: [
+        {
+          id: "components",
+          name: "Components & Parts",
+          items: [
+            { name: "Brake Calipers", href: "#" },
+            { name: "Brake Pads", href: "#" },
+            { name: "Brake Rotors", href: "#" },
+            { name: "Brake Lines & Hoses", href: "#" },
+            { name: "Master Cylinders", href: "#" },
+            { name: "Browse All", href: "#" },
+          ],
+        },
+        {
+          id: "maintenance-care",
+          name: "Maintenance & Care",
+          items: [
+            { name: "Brake Cleaners", href: "#" },
+            { name: "Brake Fluid", href: "#" },
+            { name: "Brake Grease", href: "#" },
+            { name: "Brake Bleeders", href: "#" },
+            { name: "Brake Pads & Shoes Replacement", href: "#" },
+            { name: "Browse All", href: "#" },
+          ],
+        },
+        {
+          id: "performance-upgrades",
+          name: "Performance & Upgrades",
+          items: [
+            { name: "Big Brake Kits", href: "#" },
+            { name: "High-Performance Brake Pads", href: "#" },
+            { name: "Performance Rotors", href: "#" },
+            { name: "Stainless Steel Brake Lines", href: "#" },
+            { name: "Upgraded Brake Calipers", href: "#" },
+            { name: "Browse All", href: "#" },
+          ],
+        },
+      ],
+    },
+    {
+      id: "transmission",
+      name: "Transmission & Drivetrain",
+      featured: [
+        {
+          name: "Transmission",
+          href: "#",
+          imageSrc:
+            "https://images.oreillyauto.com/parts/img/medium/ptq/nv3550_m150042_fro.jpg",
+          imageAlt: "Different types of Transmission",
+        },
+        {
+          name: "Drivetrain",
+          href: "#",
+          imageSrc:
+            "https://images.oreillyauto.com/parts/img/large/idd/vw-8169.jpg",
+          imageAlt: "Shiny drivetrain",
+        },
+      ],
+      sections: [
+        {
+          id: "components",
+          name: "Components & Parts",
+          items: [
+            { name: "Automatic Transmission Assembly", href: "#" },
+            { name: "Axle Shafts", href: "#" },
+            { name: "Clutch Kits", href: "#" },
+            { name: "Differentials", href: "#" },
+            { name: "Driveshafts", href: "#" },
+            { name: "Browse All", href: "#" },
+          ],
+        },
+        {
+          id: "maintenance-care",
+          name: "Maintenance & Care",
+          items: [
+            { name: "Differential Fluids", href: "#" },
+            { name: "Differential Gaskets & Seals", href: "#" },
+            { name: "Drivetrain Lubricants", href: "#" },
+            { name: "Transmission Filters", href: "#" },
+            { name: "Transmission Flush", href: "#" },
+            { name: "Browse All", href: "#" },
+          ],
+        },
+        {
+          id: "performance-upgrades",
+          name: "Performance & Upgrades",
+          items: [
+            { name: "High-Performance Transmission Coolers", href: "#" },
+            { name: "Limited Slip Differentials", href: "#" },
+            { name: "Performance Clutch Kits", href: "#" },
+            { name: "Performance Driveshafts", href: "#" },
+            { name: "Racing Transmissions", href: "#" },
+            { name: "Browse All", href: "#" },
+          ],
+        },
+      ],
+    },
+  ],
+  // Make a backend-service to locate stores. Store all locations into mongodb/mysql retreive and test using postman/soapui
+  pages: [{ name: "Stores", href: "#" }],
+};
+
+export default navigation;
