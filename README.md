@@ -1,70 +1,134 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+```mermaid
+erDiagram
+    address {
+        bigint id
+        bigint user_id
+        varchar city
+        varchar first_name
+        varchar last_name
+        varchar mobile
+        varchar state
+        varchar street_address
+        varchar zip_code
+    }
 
-## Available Scripts
+    cart {
+        bigint id
+        bigint user_id
+        int total_items
+        double total_price
+    }
 
-In the project directory, you can run:
+    cart_item {
+        bigint id
+        double price
+        int quantity
+        bigint cart_id
+        bigint product_pid
+        bigint user_id
+    }
 
-### `npm start`
+    categories {
+        bigint id
+        int level
+        varchar name
+        bigint parent_category_id
+    }
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+    customer_order {
+        bigint id
+        bigint user_id
+        bigint shipping_address_id
+        double amount_paid
+        int num_items
+        double total_price
+        datetime created_at
+        datetime order_date
+        datetime payment_date
+        datetime delivery_date
+        varchar order_id
+        varchar order_status
+        varchar payment_id
+        varchar payment_method
+        varchar status
+        varchar transaction_id
+    }
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+    order_item {
+        bigint id
+        double price
+        int quantity
+        bigint order_id
+        bigint product_pid
+        bigint user_id
+    }
 
-### `npm test`
+    payment_information {
+        bigint user_id
+        varchar card_number
+        varchar cardholder_name
+        varchar cvv
+        date expiration_date
+    }
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+    product {
+        bigint pid
+        double price
+        int quantity
+        int num_ratings
+        bigint category_id
+        varchar title
+        varchar description
+        varchar image_url
+        varchar product_line
+        varchar product_family
+        varchar stock
+        datetime created_at
+    }
 
-### `npm run build`
+    rating {
+        bigint id
+        bigint user_id
+        bigint product_id
+        double rating
+        datetime created_at
+    }
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+    review {
+        bigint id
+        bigint user_id
+        bigint product_id
+        varchar review
+        datetime created_at
+    }
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+    user {
+        bigint id
+        varchar first_name
+        varchar last_name
+        varchar email
+        varchar password
+        varchar mobile
+        varchar role
+        datetime created_at
+    }
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+    address ||--o{ user : "belongs_to"
+    user ||--o{ cart : "has_one"
+    user ||--o{ cart_item : "has_many"
+    user ||--o{ payment_information : "has_many"
+    user ||--o{ rating : "has_many"
+    user ||--o{ review : "has_many"
+    user ||--o{ customer_order : "has_many"
+    cart ||--o{ cart_item : "has_many"
+    cart_item ||--o{ product : "belongs_to"
+    categories ||--o{ product : "has_many"
+    categories }|..|{ categories : "has_many"
+    product ||--o{ rating : "has_many"
+    product ||--o{ review : "has_many"
+    customer_order ||--o{ address : "has_one"
+    customer_order ||--o{ order_item : "has_many"
+    order_item ||--o{ product : "belongs_to"
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```
