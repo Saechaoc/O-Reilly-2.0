@@ -1,4 +1,3 @@
-import { Fragment, useEffect, useState } from "react";
 import { Dialog, Popover, Tab, Transition } from "@headlessui/react";
 import {
   Bars3Icon,
@@ -6,12 +5,13 @@ import {
   ShoppingBagIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
+import { Fragment, useEffect, useState } from "react";
 
-import { Avatar, Button, Menu, MenuItem } from "@mui/material";
-import { deepPurple } from "@mui/material/colors";
-// import navigation from "./navigationData";
-import { useNavigate } from "react-router-dom";
-
+import { Avatar, Button, Menu, MenuItem, MenuList } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
+import { getUser, logout } from "../../../State/Auth/Action";
+import AuthModal from "../../Auth/AuthModal";
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
@@ -206,6 +206,11 @@ export default function Navigation() {
   const [anchorEl, setAnchorEl] = useState(null);
   const openUserMenu = Boolean(anchorEl);
   const jwt = localStorage.getItem("jwt");
+  const [openSignIn, setOpenSignIn] = useState(false);
+  const { auth } = useSelector((store) => store);
+  console.log(auth);
+  const dispatch = useDispatch();
+  const location = useLocation();
 
   const pages = navigation.pages || {};
   const pageKeys = Object.keys(pages);
@@ -226,10 +231,49 @@ export default function Navigation() {
     setOpenAuthModal(false);
   };
 
+  const handleOpenSignIn = () => {
+    setOpenSignIn(true);
+  };
+
+  const handleCloseSignIn = () => {
+    setOpenSignIn(false);
+  };
+
   const handleCategoryClick = (category, section, item, close) => {
     navigate(`/${category.id}/${section.id}/${item.name}`);
     close();
   };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    console.log({
+      email: data.get("email"),
+      password: data.get("password"),
+    });
+    handleCloseSignIn();
+  };
+
+  const handleLogout = () => {
+    dispatch(logout());
+    handleCloseUserMenu();
+    navigate("/");
+  };
+
+  useEffect(() => {
+    if (jwt) {
+      dispatch(getUser(jwt));
+    }
+  }, [jwt, auth.jwt]);
+
+  useEffect(() => {
+    if (auth.user) {
+      handleClose();
+    }
+    if (location.pathname === "/login" || location.pathname === "/register") {
+      navigate(-1);
+    }
+  }, [auth.user]);
 
   return (
     <div className="bg-white z-50 w-full relative">
@@ -580,35 +624,49 @@ export default function Navigation() {
               </Popover.Group>
 
               <div className="ml-auto flex items-center">
+                {/* Sign In */}
                 <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                  <a
-                    href="#"
-                    className="text-sm font-medium text-gray-700 hover:text-gray-800"
-                  >
-                    Sign in
-                  </a>
-                  <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
-                  <a
-                    href="#"
-                    className="text-sm font-medium text-gray-700 hover:text-gray-800"
-                  >
-                    Create account
-                  </a>
-                </div>
-
-                <div className="hidden lg:ml-8 lg:flex">
-                  <a
-                    href="#"
-                    className="flex items-center text-gray-700 hover:text-gray-800"
-                  >
-                    <img
-                      src="https://tailwindui.com/img/flags/flag-united-states.svg"
-                      alt=""
-                      className="block h-auto w-5 flex-shrink-0"
-                    />
-                    <span className="ml-3 block text-sm font-medium">USD</span>
-                    <span className="sr-only">, change currency</span>
-                  </a>
+                  {auth.user?.firstName ? (
+                    <div>
+                      <Avatar
+                        className="text-white"
+                        onClick={handleUserClick}
+                        aria-controls={open ? "basic-menu" : undefined}
+                        aria-haspopup="true"
+                        aria-expanded={open ? "true" : undefined}
+                        sx={{
+                          color: "white",
+                          cursor: "pointer",
+                        }}
+                      >
+                        {auth.user?.firstName[0].toUpperCase()}
+                      </Avatar>
+                      {openUserMenu && (
+                        <Menu
+                          id="basic-menu"
+                          anchorEl={anchorEl}
+                          open={Boolean(anchorEl)}
+                          onClose={handleCloseUserMenu}
+                        >
+                          <MenuList>
+                            <MenuItem onClick={handleCloseUserMenu}>
+                              Profile
+                            </MenuItem>
+                            <MenuItem
+                              onClick={() => navigate("/account/order")}
+                            >
+                              My Orders
+                            </MenuItem>
+                            <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                          </MenuList>
+                        </Menu>
+                      )}
+                    </div>
+                  ) : (
+                    <Button variant="outlined" onClick={handleOpen}>
+                      Sign In
+                    </Button>
+                  )}
                 </div>
 
                 {/* Search */}
@@ -640,6 +698,7 @@ export default function Navigation() {
           </div>
         </nav>
       </header>
+      <AuthModal handleClose={handleClose} open={openAuthModal} />
     </div>
   );
 }

@@ -1,6 +1,4 @@
-import { Fragment, useCallback, useEffect, useState } from "react";
 import { Dialog, Disclosure, Menu, Transition } from "@headlessui/react";
-import { XMarkIcon } from "@heroicons/react/24/outline";
 import {
   ChevronDownIcon,
   FunnelIcon,
@@ -8,17 +6,22 @@ import {
   PlusIcon,
   Squares2X2Icon,
 } from "@heroicons/react/20/solid";
+import { XMarkIcon } from "@heroicons/react/24/outline";
+import { Fragment, useCallback, useEffect, useState } from "react";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { parts } from "../../../data/parts/Parts";
 import PriceFilter from "./PriceFilter";
 import ProductCard from "./ProductCard";
-import UniqueFiltersComponent from "./UniqueFiltersComponent";
 import { filters } from "./UniqueFilters";
 import { filterProducts } from "./filterData";
-import { parts } from "../../../data/parts/Parts";
+import { useDispatch, useSelector } from "react-redux";
+import { findAllProducts, findProducts } from "../../../State/Product/Action";
 
 const sortOptions = [
-  { name: "Most Popular", href: "#", current: true },
-  { name: "Best Rating", href: "#", current: false },
-  { name: "Newest", href: "#", current: false },
+  // Todo add more sort options
+  // { name: "Most Popular", href: "#", current: true },
+  // { name: "Best Rating", href: "#", current: false },
+  // { name: "Newest", href: "#", current: false },
   { name: "Price: Low to High", href: "#", current: false },
   { name: "Price: High to Low", href: "#", current: false },
 ];
@@ -33,6 +36,8 @@ function classNames(...classes) {
 }
 
 export default function Product() {
+  const location = useLocation();
+  const navigate = useNavigate();
   const [selectedBrand, setSelectedBrand] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState([]);
   const [selectedSubcategory, setSelectedSubcategory] = useState([]);
@@ -44,17 +49,58 @@ export default function Product() {
   );
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+  const [allProducts, setAllProducts] = useState([]);
+  const productsFromBackend = useSelector((store) => store.product.products);
+  const dispatch = useDispatch();
+
+  // Fetch all products when the component mounts
+  useEffect(() => {
+    dispatch(findAllProducts());
+  }, [dispatch]);
+
+  useEffect(() => {
+    setAllProducts(productsFromBackend);
+  }, [productsFromBackend]);
+
+  const decodedQueryString = decodeURIComponent(location.search);
+  const searchParams = new URLSearchParams(decodedQueryString);
+  const priceValue = searchParams.get("price");
+  const pageNumber = searchParams.get("page");
+  const sortValue = searchParams.get("sort");
+  const stock = searchParams.get("stock");
+  const param = useParams();
+
+  useEffect(() => {
+    const [minPrice, maxPrice] =
+      priceValue === null ? [0, 0] : priceValue.split("-").map(Number);
+
+    const data = {
+      category: param.levelThree,
+      minPrice,
+      maxPrice,
+      sort: sortValue || "price_low",
+      pageNumber: pageNumber - 1,
+      pageSize: 10,
+      stock: stock,
+    };
+    dispatch(findProducts(data));
+  }, [param.levelThree, priceValue, pageNumber, sortValue, stock]);
 
   const applyFilters = useCallback(() => {
-    const filtered = filterProducts(
-      selectedCategory,
-      selectedSubcategory,
-      selectedBrand,
-      parseFloat(minPrice) || 0,
-      parseFloat(maxPrice) || Infinity
-    );
-    setFilteredProducts(filtered);
+    let filteredProducts = [];
+    if (Array.isArray(productsFromBackend)) {
+      filteredProducts = filterProducts(
+        productsFromBackend,
+        selectedCategory,
+        selectedSubcategory,
+        selectedBrand,
+        parseFloat(minPrice) || 0,
+        parseFloat(maxPrice) || Infinity
+      );
+    }
+    setFilteredProducts(filteredProducts);
   }, [
+    productsFromBackend,
     selectedCategory,
     selectedSubcategory,
     selectedBrand,
@@ -98,16 +144,45 @@ export default function Product() {
     }
   };
 
-  useEffect(() => {
-    applyFilters();
-  }, [applyFilters]);
-
   const onMinPriceChange = (value) => {
     setMinPrice(value);
   };
 
   const onMaxPriceChange = (value) => {
     setMaxPrice(value);
+  };
+
+  const handleFilter = (value, sectionId) => {
+    const searchParams = new URLSearchParams(location.search);
+
+    let filterValue = searchParams.getAll(sectionId);
+
+    if (filterValue.length > 0 && filterValue[0].split(",").includes(value)) {
+      filterValue = filterValue[0].split(",").filter((item) => item !== value);
+
+      if (filterValue.length === 0) {
+        searchParams.delete(sectionId);
+        console.log("Delete search param");
+      }
+      console.log("includes, ", value, sectionId, filterValue);
+    } else {
+      filterValue.push(value);
+    }
+
+    if (filterValue.length > 0) {
+      searchParams.set(sectionId, filterValue.join(","));
+    }
+
+    const query = searchParams.toString();
+    navigate({ search: `?${query}` });
+  };
+
+  const handleRadioFilterChange = (e, sectionId) => {
+    const searchParams = new URLSearchParams(location.search);
+
+    searchParams.set(sectionId, e.target.value);
+    const query = searchParams.toString();
+    navigate({ search: `?${query}` });
   };
 
   return (

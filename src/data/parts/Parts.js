@@ -403,8 +403,8 @@ export const parts = [
     imageUrl: "https://www.oreillyauto.com/img/image-coming-soon.png",
     category: "Performance & Upgrades",
     subcategory: "Upgraded Brake Calipers",
-    },
-    {
+  },
+  {
     id: 46,
     brand: "Wagner",
     title: "Brake Pads",
@@ -440,7 +440,7 @@ export const parts = [
     category: "Components & Parts",
     subcategory: "Master Cylinders",
   },
-    {
+  {
     id: 50,
     brand: "Monroe",
     title: "Struts",
@@ -450,7 +450,7 @@ export const parts = [
     subcategory: "Suspension",
   },
   {
-    id: 51, 
+    id: 51,
     brand: "CRC",
     title: "Brake Cleaners",
     price: 5.99,
@@ -511,7 +511,8 @@ export const parts = [
     imageUrl: "https://www.oreillyauto.com/img/image-coming-soon.png",
     category: "Performance & Upgrades",
     subcategory: "Brake Lines",
-  },{
+  },
+  {
     id: 64,
     brand: "ACDelco",
     title: "Automatic Transmission Assembly",
