@@ -1,27 +1,34 @@
 import React, { useEffect } from "react";
 import AddressCard from "../address-card/AddressCard";
-import Cart from "../cart/Cart";
 import CartItem from "../cart/CartItem";
 import { useDispatch, useSelector } from "react-redux";
 import { getCart } from "../../../State/Cart/Action";
+import { useLocation } from "react-router-dom";
+import { getOrder } from "../../../State/Order/Action";
 
 const OrderSummary = () => {
   const dispatch = useDispatch();
+  const order = useSelector((store) => store.order);
   const cart = useSelector((store) => store.cart);
   const cartItems = useSelector((store) => store.cart.cartItems);
   const cartUpdated = useSelector((store) => store.cart.cartUpdated);
-  useEffect(() => {
-    // console.log("Cart updated", cartUpdated);
-    if (cartUpdated === true) {
-      dispatch(getCart());
-    }
-  }, [dispatch, cartUpdated]);
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const orderId = searchParams.get("order_id");
 
-  console.log(cartItems);
+  useEffect(() => {
+    dispatch(getCart());
+  }, [dispatch, cartUpdated, cart.removeCartItem, cart.updateCartItem]);
+
+  useEffect(() => {
+    dispatch(getOrder(orderId));
+  }, [dispatch, orderId]);
+
+  console.log(order);
   return (
     <div>
       <div className="p-5 shadow-lg rounded-s-md border">
-        <AddressCard />
+        <AddressCard address={order?.order?.shippingAddress} />
       </div>
       <div className="lg:grid grid-cols-3 lg:px-16 relative">
         {/* Left side of checkout */}
