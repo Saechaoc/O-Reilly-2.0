@@ -12,7 +12,7 @@ import {
 
 const initialState = {
   products: [],
-  product: null,
+  // product: null,
   loading: false,
   error: null,
 };

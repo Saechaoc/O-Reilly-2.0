@@ -1,16 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 
-const CartQtyContainer = () => {
-  const [quantity, setQuantity] = useState(1);
+const CartQtyContainer = ({ initialQuantity, onQuantityChange }) => {
+  const [quantity, setQuantity] = useState(initialQuantity);
+  useEffect(() => {
+    setQuantity(initialQuantity);
+  }, [initialQuantity]);
 
   const handleIncrease = () => {
     setQuantity((prevQuantity) => prevQuantity + 1);
+    onQuantityChange(quantity + 1);
   };
 
   const handleDecrease = () => {
     if (quantity > 1) {
-      // This condition prevents the number from going below 1
       setQuantity((prevQuantity) => prevQuantity - 1);
+      onQuantityChange(quantity - 1);
     }
   };
 
