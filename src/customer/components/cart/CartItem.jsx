@@ -28,7 +28,6 @@ const CartItem = ({ cartItem }) => {
 
   const handleItemRemoved = () => {
     dispatch(removeCartItem(cartItem));
-    navigate("/cart");
   };
 
   useEffect(() => {

@@ -1,8 +1,15 @@
 import { Box, Button, Grid, TextField } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import AddressCard from "../address-card/AddressCard";
+import { useDispatch, useSelector } from "react-redux";
+import { createOrder, getOrder } from "../../../State/Order/Action";
+import { useNavigate } from "react-router-dom";
 
 const DeliveryAddressForm = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const order = useSelector((store) => store.order);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
@@ -13,10 +20,13 @@ const DeliveryAddressForm = () => {
       city: data.get("City"),
       state: data.get("State"),
       zip: data.get("Zip"),
-      phone: data.get("phoneNumber"),
+      mobile: data.get("phoneNumber"),
     };
+    const orderData = { address, navigate };
+    dispatch(createOrder(orderData));
     console.log("address", address);
   };
+
   return (
     <div>
       <Grid container spacing={4}>
@@ -25,16 +35,25 @@ const DeliveryAddressForm = () => {
           lg={5}
           className="border rounded-e-md shadow-md h-[30.5rem] overflow-y-scroll"
         >
-          <div className="p-5 py-7 border-b cursor-pointer">
-            <AddressCard></AddressCard>
-            <Button
-              sx={{ mt: 2, bgcolor: "rgb(6, 125, 53)" }}
-              size="large"
-              variant="contained"
-            >
-              Deliver Here
-            </Button>
-          </div>
+          {order?.order?.shippingAddress ? (
+            <div className="p-5 py-7 border-b cursor-pointer">
+              <AddressCard address={order?.order?.shippingAddress} />
+              <Button
+                sx={{ mt: 2, bgcolor: "rgb(6, 125, 53)" }}
+                size="large"
+                variant="contained"
+                onClick={
+                  // console.log(`checkout?step=3&order_id=${order?.order?.id}`)
+                  () =>
+                    navigate(`/checkout?step=2&order_id=${order?.order?.id}`)
+                }
+              >
+                Deliver Here
+              </Button>
+            </div>
+          ) : (
+            ""
+          )}
         </Grid>
         <Grid item xs={12} lg={7}>
           <Box className="border rounded-s-md shadow-md p-5">

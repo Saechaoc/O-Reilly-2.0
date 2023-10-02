@@ -17,12 +17,10 @@ export const createOrder = (reqData) => async (dispatch) => {
     dispatch({
       type: CREATE_ORDER_REQUEST,
     });
-    const { data } = await api.post(`/api/orders`, reqData.address);
+    const { data } = await api.post(`/api/orders/`, reqData.address);
 
     if (data.id) {
-      reqData.navigate({
-        search: `step=3&order_id=${data.id}`,
-      });
+      reqData.navigate({ search: `step=2&order_id=${data.id}` });
     }
 
     dispatch({
@@ -40,7 +38,7 @@ export const createOrder = (reqData) => async (dispatch) => {
 export const getOrder = (orderId) => async (dispatch) => {
   try {
     dispatch({
-      GET_ORDER_BY_ID_REQUEST,
+      type: GET_ORDER_BY_ID_REQUEST,
     });
 
     const { data } = await api.get(`/api/orders/${orderId}`);
@@ -53,10 +51,10 @@ export const getOrder = (orderId) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: GET_ORDER_BY_ID_FAILURE,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
+      payload: error.message,
+      // error.response && error.response.data.message
+      //   ? error.response.data.message
+      //   : error.message,
     });
   }
 };
@@ -64,7 +62,7 @@ export const getOrder = (orderId) => async (dispatch) => {
 export const getOrderHistory = (reqData) => async (dispatch, getState) => {
   try {
     dispatch({
-      GET_ORDER_HISTORY_REQUEST,
+      type: GET_ORDER_HISTORY_REQUEST,
     });
     const { data } = await api.get(`/api/orders/user`);
 
@@ -76,10 +74,10 @@ export const getOrderHistory = (reqData) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: GET_ORDER_HISTORY_FAILURE,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
+      payload: error.message,
+      // error.response && error.response.data.message
+      //   ? error.response.data.message
+      //   : error.message,
     });
   }
 };
