@@ -208,7 +208,7 @@ export default function Navigation() {
   const jwt = localStorage.getItem("jwt");
   const [openSignIn, setOpenSignIn] = useState(false);
   const { auth } = useSelector((store) => store);
-  console.log(auth);
+
   const dispatch = useDispatch();
   const location = useLocation();
 

@@ -66,7 +66,7 @@ export default function ProductCard({ products }) {
                   src={product.imageUrl}
                   alt=""
                   className="h-full w-full object-cover object-center group-hover:opacity-75"
-                  onClick={() => navigate(`/product/${5}`)}
+                  onClick={() => navigate(`/product/${product.pid}`)}
                 />
               </div>
               <h3 className="mt-4 text-sm text-gray-700">{product.title}</h3>

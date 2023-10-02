@@ -22,7 +22,7 @@ const CustomerRouters = () => {
         <Route path="/" element={<HomePage />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/:levelOne/:levelTwo/:levelThree" element={<Product />} />
-        <Route path="/product/:productId" element={<ProductDetails />} />
+        <Route path="/product/:pid" element={<ProductDetails />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/account/order/" element={<Order />} />
         <Route path="/account/order/:orderId" element={<OrderDetails />} />

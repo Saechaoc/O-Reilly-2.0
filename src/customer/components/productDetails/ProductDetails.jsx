@@ -1,8 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { StarIcon } from "@heroicons/react/20/solid";
 import { RadioGroup } from "@headlessui/react";
 import "../../../styles.css";
 import AddToCartBtn from "../../add-to-cart/AddToCartBtn";
+import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { findProductsById } from "../../../State/Product/Action";
+import {
+  addItemToCart,
+  getCart,
+  updateCartItem,
+} from "../../../State/Cart/Action";
+import CartQtyContainer from "../../cart-qty/CartQtyContainer";
 
 const product = {
   name: "Basic Tee 6-Pack",
@@ -56,6 +65,7 @@ const product = {
   details:
     'The 6-Pack includes two black, two white, and two heather gray Basic Tees. Sign up for our subscription service and be the first to get new, exciting colors, like our upcoming "Charcoal Gray" limited release.',
 };
+
 const reviews = { href: "#", average: 4, totalCount: 117 };
 
 function classNames(...classes) {
@@ -63,9 +73,24 @@ function classNames(...classes) {
 }
 
 export default function ProductDetails() {
-  const [selectedColor, setSelectedColor] = useState(product.colors[0]);
-  const [selectedSize, setSelectedSize] = useState(product.sizes[2]);
   const [quantity, setQuantity] = useState(1);
+  const navigate = useNavigate();
+  const params = useParams();
+  const dispatch = useDispatch();
+  const { products } = useSelector((store) => store);
+  // console.log("----", params.pid);
+  // console.log("Products ----", products);
+
+  const handleAddToCart = () => {
+    const data = { pid: params.pid };
+    dispatch(addItemToCart(data));
+    navigate("/cart");
+  };
+
+  useEffect(() => {
+    const data = { pid: params.pid };
+    dispatch(findProductsById(data));
+  }, [dispatch, params.pid]);
 
   const handleIncrease = () => {
     setQuantity((prevQuantity) => prevQuantity + 1);
@@ -73,10 +98,13 @@ export default function ProductDetails() {
 
   const handleDecrease = () => {
     if (quantity > 1) {
-      // This condition prevents the number from going below 1
       setQuantity((prevQuantity) => prevQuantity - 1);
     }
   };
+
+  useEffect(() => {
+    dispatch(getCart());
+  }, [dispatch]);
 
   return (
     <div className="bg-white">
@@ -125,8 +153,8 @@ export default function ProductDetails() {
           <div className="flex flex-col items-center">
             <div className="overflow-hidden rounded-lg max-w-[30rem] max-h-[35rem]">
               <img
-                src={product.images[0].src}
-                alt={product.images[0].alt}
+                src={products.products?.imageUrl}
+                alt={product.products?.description}
                 className="h-full w-full object-cover object-center"
               />
             </div>
@@ -146,11 +174,22 @@ export default function ProductDetails() {
           {/* Product info */}
           <div className="lg:col-span-1 mx-auto max-w-2xl px-4 pb-16 sm:px-6 lg:max-w-7xl lg:px-8 lg:pb-24">
             <div className="lg:col-span-2">
-              <h1 className="text-lg lg:text-xl font-semibold tracking-tight text-gray-900">
-                Random O'Reilly Shit
+              <h1 className="text-3xl font-semibold tracking-tight text-gray-900">
+                {products.products?.brand}
               </h1>
-              <h1 className="text-lg lg:text-xl tracking-tight text-gray-900 opacity-60 pt-1">
-                Insert Text Here
+              <h1 className="text-xs lg:text-xl tracking-tight text-gray-900 opacity-60 pt-1">
+                <p>
+                  Product Family:{" "}
+                  <span className="font-bold">
+                    {products.products?.productFamily}
+                  </span>
+                </p>
+                <p>
+                  Product Line:{" "}
+                  <span className="font-bold">
+                    {products.products?.productLine}
+                  </span>
+                </p>
               </h1>
             </div>
 
@@ -158,7 +197,7 @@ export default function ProductDetails() {
             <div className="mt-4 lg:row-span-3 lg:mt-0">
               <h2 className="sr-only">Product information</h2>
               <p className="text-3xl tracking-tight text-gray-900">
-                {product.price}
+                ${parseFloat(products.products?.price).toFixed(2)}
               </p>
 
               {/* Reviews */}
@@ -190,7 +229,11 @@ export default function ProductDetails() {
               </div>
 
               {/* Quantity Input */}
-              <section className="flex items-center space-x-4 pt-10">
+              <CartQtyContainer
+                initialQuantity={quantity}
+                onQuantityChange={setQuantity}
+              />
+              {/* <section className="flex items-center space-x-4 pt-10">
                 <div>
                   <label htmlFor="Quantity" className="sr-only">
                     {" "}
@@ -221,44 +264,23 @@ export default function ProductDetails() {
                       +
                     </button>
                   </div>
-                </div>
-                <AddToCartBtn />
-              </section>
+                </div> */}
+              <AddToCartBtn
+                quantity={quantity}
+                price={products.products?.price}
+              />
+              {/* </section> */}
             </div>
 
             <div className="py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-16 lg:pr-8 lg:pt-6">
               {/* Description and details */}
               <div>
-                <h3 className="sr-only">Description</h3>
+                <h3 className="font-bold">Detailed Description</h3>
 
                 <div className="space-y-6">
                   <p className="text-base text-gray-900">
-                    {product.description}
+                    {products.products?.description}
                   </p>
-                </div>
-              </div>
-
-              <div className="mt-10">
-                <h3 className="text-sm font-medium text-gray-900">
-                  Highlights
-                </h3>
-
-                <div className="mt-4">
-                  <ul role="list" className="list-disc space-y-2 pl-4 text-sm">
-                    {product.highlights.map((highlight) => (
-                      <li key={highlight} className="text-gray-400">
-                        <span className="text-gray-600">{highlight}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-
-              <div className="mt-10">
-                <h2 className="text-sm font-medium text-gray-900">Details</h2>
-
-                <div className="mt-4 space-y-6">
-                  <p className="text-sm text-gray-600">{product.details}</p>
                 </div>
               </div>
             </div>
