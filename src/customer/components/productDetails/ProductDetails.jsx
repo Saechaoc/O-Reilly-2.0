@@ -12,6 +12,7 @@ import {
   updateCartItem,
 } from "../../../State/Cart/Action";
 import CartQtyContainer from "../../cart-qty/CartQtyContainer";
+import ProductBreadcrumb from "./productCategories";
 
 const product = {
   name: "Basic Tee 6-Pack",
@@ -78,8 +79,6 @@ export default function ProductDetails() {
   const params = useParams();
   const dispatch = useDispatch();
   const { products } = useSelector((store) => store);
-  // console.log("----", params.pid);
-  // console.log("Products ----", products);
 
   const handleAddToCart = () => {
     const data = { pid: params.pid };
@@ -109,44 +108,7 @@ export default function ProductDetails() {
   return (
     <div className="bg-white">
       <div className="pt-6">
-        <nav aria-label="Breadcrumb">
-          <ol
-            role="list"
-            className="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8"
-          >
-            {product.breadcrumbs.map((breadcrumb) => (
-              <li key={breadcrumb.id}>
-                <div className="flex items-center">
-                  <a
-                    href={breadcrumb.href}
-                    className="mr-2 text-sm font-medium text-gray-900"
-                  >
-                    {breadcrumb.name}
-                  </a>
-                  <svg
-                    width={16}
-                    height={20}
-                    viewBox="0 0 16 20"
-                    fill="currentColor"
-                    aria-hidden="true"
-                    className="h-5 w-4 text-gray-300"
-                  >
-                    <path d="M5.697 4.34L8.98 16.532h1.327L7.025 4.341H5.697z" />
-                  </svg>
-                </div>
-              </li>
-            ))}
-            <li className="text-sm">
-              <a
-                href={product.href}
-                aria-current="page"
-                className="font-medium text-gray-500 hover:text-gray-600"
-              >
-                {product.name}
-              </a>
-            </li>
-          </ol>
-        </nav>
+        <ProductBreadcrumb product={products?.products} />
 
         <section className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-2 px-4 pt-10">
           {/* Image gallery */}
@@ -158,11 +120,12 @@ export default function ProductDetails() {
                 className="h-full w-full object-cover object-center"
               />
             </div>
+            {/* TODO CREATE A LIST OF IMAGES THAT YOU CAN SWITCH TO AND FROM*/}
             <div className="flex flex-wrap space-x-5 justify-center">
-              {product.images.map((item) => (
+              {[1, 1, 1, 1].map((item) => (
                 <div className="aspect-h-2 aspect-w-3 overflow-hidden rounded-lg max-w-[5rem] mt-4">
                   <img
-                    src={item.src}
+                    src={products.products?.imageUrl}
                     alt={item.alt}
                     className="h-full w-full object-cover object-center"
                   />
@@ -229,50 +192,20 @@ export default function ProductDetails() {
               </div>
 
               {/* Quantity Input */}
-              <CartQtyContainer
-                initialQuantity={quantity}
-                onQuantityChange={setQuantity}
-              />
-              {/* <section className="flex items-center space-x-4 pt-10">
-                <div>
-                  <label htmlFor="Quantity" className="sr-only">
-                    {" "}
-                    Quantity{" "}
-                  </label>
-
-                  <div className="flex items-center border border-gray-200 rounded">
-                    <button
-                      type="button"
-                      className="w-10 h-10 leading-10 text-gray-600 transition hover:opacity-75"
-                      onClick={handleDecrease}
-                    >
-                      -
-                    </button>
-
-                    <input
-                      type="number"
-                      id="Quantity"
-                      value={quantity}
-                      className="h-10 w-16 border-transparent text-center [-moz-appearance:_textfield] sm:text-sm [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none"
-                    />
-
-                    <button
-                      type="button"
-                      className="w-10 h-10 leading-10 text-gray-600 transition hover:opacity-75"
-                      onClick={handleIncrease}
-                    >
-                      +
-                    </button>
-                  </div>
-                </div> */}
-              <AddToCartBtn
-                quantity={quantity}
-                price={products.products?.price}
-              />
+              <div className="flex items-center space-x-4 py-4">
+                <CartQtyContainer
+                  initialQuantity={quantity}
+                  onQuantityChange={setQuantity}
+                />
+                <AddToCartBtn
+                  quantity={quantity}
+                  price={products.products?.price}
+                />
+              </div>
               {/* </section> */}
             </div>
 
-            <div className="py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-16 lg:pr-8 lg:pt-6">
+            <div className="py-10 lg:col-span-2 lg:col-start-1 lg:pb-16 lg:pr-8 lg:pt-6">
               {/* Description and details */}
               <div>
                 <h3 className="font-bold">Detailed Description</h3>

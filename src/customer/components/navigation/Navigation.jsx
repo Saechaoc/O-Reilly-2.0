@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getUser, logout } from "../../../State/Auth/Action";
 import AuthModal from "../../Auth/AuthModal";
+import { getCart } from "../../../State/Cart/Action";
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
@@ -206,6 +207,7 @@ export default function Navigation() {
   const [anchorEl, setAnchorEl] = useState(null);
   const openUserMenu = Boolean(anchorEl);
   const jwt = localStorage.getItem("jwt");
+  const cartItems = useSelector((store) => store.cart.cartItems);
   const [openSignIn, setOpenSignIn] = useState(false);
   const { auth } = useSelector((store) => store);
 
@@ -263,6 +265,7 @@ export default function Navigation() {
   useEffect(() => {
     if (jwt) {
       dispatch(getUser(jwt));
+      dispatch(getCart());
     }
   }, [jwt, auth.jwt]);
 
@@ -688,7 +691,11 @@ export default function Navigation() {
                       aria-hidden="true"
                     />
                     <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
-                      0
+                      {Array.isArray(cartItems) && cartItems.length > 0
+                        ? cartItems
+                            .filter((item) => item !== undefined)
+                            .reduce((total, item) => total + item.quantity, 0)
+                        : 0}
                     </span>
                     <span className="sr-only">items in cart, view bag</span>
                   </a>

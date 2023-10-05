@@ -1,21 +1,18 @@
-import { Button, CircularProgress } from "@mui/material";
+import { Button } from "@mui/material";
 import React, { useEffect } from "react";
-import CartQtyContainer from "../../cart-qty/CartQtyContainer";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getCart,
   removeCartItem,
   updateCartItem,
 } from "../../../State/Cart/Action";
-import { useNavigate } from "react-router-dom";
+import CartQtyContainer from "../../cart-qty/CartQtyContainer";
 
 const CartItem = ({ cartItem }) => {
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.auth.user);
-  const navigate = useNavigate();
 
   const handleQuantityChange = (newQuantity) => {
-    console.log(cartItem.cartItems);
     const requestBody = {
       id: cartItem.id,
       product: cartItem.product,

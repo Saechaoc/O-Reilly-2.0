@@ -17,45 +17,25 @@ const AddToCartBtn = ({ quantity, price }) => {
       price: price,
     };
 
-    console.log("data-----", requestBody);
+    // console.log("data-----", requestBody);
     try {
-      await dispatch(addItemToCart(requestBody))
-        .then(() => {
-          console.log("item added to cart");
-          navigate("/cart");
-        })
-        .catch((error) => {
-          console.error("Error adding item to cart:", error);
-        });
-      console.log("Completed addItemToCart ");
-      console.log("Attempting updateCart Item");
-
-      const updateRequest = {
-        id: params.pid,
-        product: cartItem[0].product,
-        quantity: quantity,
-        price: price,
-        userId: userId.id,
-      };
-      await dispatch(updateCartItem(updateRequest));
-      console.log(cartItem);
+      await dispatch(addItemToCart(requestBody));
+      navigate("/cart");
     } catch (error) {
       console.error("Error");
     }
   };
 
   return (
-    <div>
-      <button
-        type="submit"
-        className="items-center justify-center border-transparent px-8 py-2 text-base font-medium text-white"
-        style={{ backgroundColor: "#067d35" }}
-        aria-label="Add to Cart"
-        onClick={handleAddToCart}
-      >
-        ADD TO CART
-      </button>
-    </div>
+    <button
+      type="submit"
+      className="items-center justify-center border-transparent px-8 py-2 text-base font-medium text-white"
+      style={{ backgroundColor: "#067d35" }}
+      aria-label="Add to Cart"
+      onClick={handleAddToCart}
+    >
+      ADD TO CART
+    </button>
   );
 };
 

@@ -19,10 +19,18 @@ const Cart = () => {
     navigate("/checkout?step=1");
   };
 
+  //TODO: This is re-rendering the page which is causing the items to shuffle
   useEffect(() => {
     // console.log("Cart updated", cartUpdated);
-    dispatch(getCart());
+    if (cartUpdated === true) {
+      dispatch(getCart());
+    }
   }, [dispatch, cartUpdated, cart.removeCartItem, cart.updateCartItem]);
+
+  // useEffect(() => {
+  //   // console.log("Cart updated", cartUpdated);
+  //   dispatch(getCart());
+  // }, [cart.updateCartItem, cart.removeCartItem]);
 
   return (
     <div>
