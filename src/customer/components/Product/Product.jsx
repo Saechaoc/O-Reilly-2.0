@@ -170,9 +170,9 @@ export default function Product() {
 
       if (filterValue.length === 0) {
         searchParams.delete(sectionId);
-        console.log("Delete search param");
+        // console.log("Delete search param");
       }
-      console.log("includes, ", value, sectionId, filterValue);
+      // console.log("includes, ", value, sectionId, filterValue);
     } else {
       filterValue.push(value);
     }

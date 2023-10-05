@@ -24,7 +24,6 @@ const DeliveryAddressForm = () => {
     };
     const orderData = { address, navigate };
     dispatch(createOrder(orderData));
-    console.log("address", address);
   };
 
   return (
@@ -42,10 +41,8 @@ const DeliveryAddressForm = () => {
                 sx={{ mt: 2, bgcolor: "rgb(6, 125, 53)" }}
                 size="large"
                 variant="contained"
-                onClick={
-                  // console.log(`checkout?step=3&order_id=${order?.order?.id}`)
-                  () =>
-                    navigate(`/checkout?step=2&order_id=${order?.order?.id}`)
+                onClick={() =>
+                  navigate(`/checkout?step=2&order_id=${order?.order?.id}`)
                 }
               >
                 Deliver Here

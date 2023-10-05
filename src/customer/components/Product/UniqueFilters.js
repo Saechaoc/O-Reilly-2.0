@@ -38,8 +38,6 @@ const UniqueFilters = () => {
     checked: false,
   }));
 
-  console.log(categoryFilterOptions);
-  console.log(subcategoryFilterOptions);
   return [
     {
       id: "brand",
