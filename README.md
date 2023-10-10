@@ -29,34 +29,7 @@ This project is using an N-tier architecture, which divides the application into
 * Model Layer: Defines data structures and ORM entities.
 * Authentication Layer: Manages auth configuration of rest endpoints using JWT token management.
 
-```mermaid
-graph TB
-    ViewLayer[View Layer]
-    ApplicationLayer[Application Layer]
-    ShoppingAPI[ShoppingAPI]
-    DataAccessObject[DataAccessObject]
-    model[Model Layer]
-    database[Database]
-    Auth[Authentication Layer]
-
-    ViewLayer -->|HTTP Requests & Responses| ApplicationLayer
-    ApplicationLayer -->|Method Calls| ShoppingAPI
-    ShoppingAPI -->|Data & Logic Processing| model
-    ShoppingAPI -->|CRUD Operations| DataAccessObject
-    DataAccessObject -->|Data Access| model
-    DataAccessObject -->|CRUD Operations| database
-    ApplicationLayer -->|Utilize Auth| Auth
-    ShoppingAPI -->|Utilize Auth| Auth
-
-    style ViewLayer fill:#000000,stroke:#333,stroke-width:2px
-    style ApplicationLayer fill:#000000,stroke:#333,stroke-width:2px
-    style ShoppingAPI fill:#000000,stroke:#333,stroke-width:2px
-    style DataAccessObject fill:#000000,stroke:#333,stroke-width:2px
-    style model fill:#000000,stroke:#333,stroke-width:2px
-    style database fill:#000000,stroke:#333,stroke-width:2px
-    style Auth fill:#000000,stroke:#333,stroke-width:2px
-```
-
+![Capture](https://github.com/Saechaoc/O-Reilly-2.0/assets/23547811/b6b5267c-baa2-48f0-b2f7-0ff25d59c9d3)
 
 ## System Interaction Summary
 1. Frontend Layer
