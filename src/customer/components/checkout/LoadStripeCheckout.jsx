@@ -19,11 +19,14 @@ export default function LoadStripeCheckout() {
 
   useEffect(() => {
     // TODO REFACTOR INTO STATE
-    fetch(`http://localhost:5454/create-payment-intent/${orderId}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ items: [{ id: "xl-tshirt" }] }),
-    })
+    fetch(
+      `https://oreilly-clone-production.up.railway.app/create-payment-intent/${orderId}`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ items: [{ id: "xl-tshirt" }] }),
+      }
+    )
       .then((res) => res.json())
       .then((data) => setClientSecret(data.clientSecret));
   }, []);
