@@ -116,7 +116,6 @@ export default function Product() {
 
   const setAppropriateValue = (e, section_id) => {
     const value = e.target.value;
-    console.log(value);
 
     switch (section_id) {
       case "brand":
@@ -126,14 +125,14 @@ export default function Product() {
           setSelectedBrand((prev) => prev.filter((item) => item !== value));
         }
         break;
-      case "category":
+      case "subcategory":
         if (e.target.checked) {
           setSelectedCategory((prev) => [...prev, value]);
         } else {
           setSelectedCategory((prev) => prev.filter((item) => item !== value));
         }
         break;
-      case "subcategory":
+      case "category":
         if (e.target.checked) {
           setSelectedSubcategory((prev) => [...prev, value]);
         } else {
