@@ -25,8 +25,8 @@ This project is using an N-tier architecture, which divides the application into
 ## System Diagram
 * Application Layer: Manages API endpoints and HTTP request handling.
 * Shopping API: Contains business logic and interacts with models and repositories for data access.
-* Data Access Objects: Defines data structures and ORM entities.
-* Repository Layer: Manages data access, potentially interacting with a database.
+* Data Access Objects: Manages data access, potentially interacting with a database.
+* Model Layer: Defines data structures and ORM entities.
 * Authentication Layer: Manages auth configuration of rest endpoints using JWT token management.
 
 ```mermaid
