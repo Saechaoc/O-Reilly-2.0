@@ -29,7 +29,69 @@ This project is using an N-tier architecture, which divides the application into
 * Model Layer: Defines data structures and ORM entities.
 * Authentication Layer: Manages auth configuration of rest endpoints using JWT token management.
 
+## System Overview
 ![Capture](https://github.com/Saechaoc/O-Reilly-2.0/assets/23547811/b6b5267c-baa2-48f0-b2f7-0ff25d59c9d3)
+
+## System Details
+```mermaid
+graph TB
+
+    subgraph "Frontend Layer"
+        ViewLayer[View Layer]
+    end
+
+    subgraph "Backend Layer"
+        subgraph controllerLayer["Application Layer"]
+            authController[AuthController]
+            adminOrderController[AdminOrderController]
+            otherControllers[OtherControllers]
+        end
+        
+        subgraph serviceLayer["Service Layer"]
+            cartService[cartServices]
+            customerUserService[productServices]
+            otherServices[OtherServices]
+        end
+        
+        subgraph modelLayer["Model Layer"]
+            cartModel[Cart]
+            productModel[Product]
+            otherModels[OtherModels]
+        end
+        
+        subgraph repositoryLayer["DAO Layer"]
+            cartRepository[CartRepository]
+            productRepository[ProductRepository]
+            OtherRepositories[OtherRespositories]
+        end
+
+        subgraph authLayer["Authentication Layer"]
+            Auth[Authentication Layer]
+        end
+
+        subgraph databaseLayer["Database Layer"]
+            database[Database]
+        end
+    end
+
+    %% Interaction Flow
+    ViewLayer -->|HTTP Requests & Responses| controllerLayer
+    controllerLayer -->|Method Calls| serviceLayer
+    serviceLayer -->|Data & Logic Processing| modelLayer
+    serviceLayer -->|CRUD Operations| repositoryLayer
+    repositoryLayer -->|Data Access| modelLayer
+    repositoryLayer -->|CRUD Operations| databaseLayer
+    controllerLayer -->|Utilize Auth| authLayer
+    serviceLayer -->|Utilize Auth| authLayer
+    style ViewLayer fill:#f9a826,stroke:#333,stroke-width:2px
+    style controllerLayer fill:#4caf50,stroke:#333,stroke-width:2px
+    style serviceLayer fill:#2196f3,stroke:#333,stroke-width:2px
+    style modelLayer fill:#ff5722,stroke:#333,stroke-width:2px
+    style repositoryLayer fill:#9c27b0,stroke:#333,stroke-width:2px
+    style authLayer fill:#e91e63,stroke:#333,stroke-width:2px
+    style databaseLayer fill:#607d8b,stroke:#333,stroke-width:2px
+
+```
 
 ## System Interaction Summary
 1. Frontend Layer
