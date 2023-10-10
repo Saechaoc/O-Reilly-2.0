@@ -60,7 +60,7 @@ export default function CheckoutForm({ orderId }) {
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: `https://oreilly-clone-production.up.railway.app/payment-completed/${orderId}`,
+        return_url: `https://o-reilly-2-0.vercel.app/payment-completed/${orderId}`,
       },
     });
 
