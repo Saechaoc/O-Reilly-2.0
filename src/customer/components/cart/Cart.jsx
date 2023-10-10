@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
-import CartItem from "./CartItem";
-import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { getCart } from "../../../State/Cart/Action";
+import CartItem from "./CartItem";
 
 const Cart = () => {
   const navigate = useNavigate();

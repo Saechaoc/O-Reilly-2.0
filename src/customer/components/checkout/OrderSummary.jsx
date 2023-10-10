@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
+import { getCart } from "../../../State/Cart/Action";
+import { getOrder } from "../../../State/Order/Action";
 import AddressCard from "../address-card/AddressCard";
 import CartItem from "../cart/CartItem";
-import { useDispatch, useSelector } from "react-redux";
-import { getCart } from "../../../State/Cart/Action";
-import { useLocation, useNavigate } from "react-router-dom";
-import { getOrder } from "../../../State/Order/Action";
 
 const OrderSummary = () => {
   const dispatch = useDispatch();

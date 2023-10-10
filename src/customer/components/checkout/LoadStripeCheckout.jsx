@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
-import CheckoutForm from "./StripeCheckout";
-import styles from "./Stripe.css";
+import { loadStripe } from "@stripe/stripe-js";
+import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router";
+import CheckoutForm from "./StripeCheckout";
 
 // Make sure to call loadStripe outside of a component’s render to avoid
 // recreating the Stripe object on every render.
@@ -38,7 +37,7 @@ export default function LoadStripeCheckout() {
   };
 
   return (
-    <div className={styles.root}>
+    <div>
       {clientSecret && (
         <Elements options={options} stripe={stripePromise}>
           <CheckoutForm orderId={orderId} />
