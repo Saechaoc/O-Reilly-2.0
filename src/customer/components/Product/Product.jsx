@@ -360,7 +360,7 @@ export default function Product() {
                       </h3>
                       <Disclosure.Panel className="pt-6">
                         <div className="space-y-4">
-                          {filters[1].options.map((option, optionIdx) => (
+                          {filters[2].options.map((option, optionIdx) => (
                             <CheckboxComponent
                               option={option}
                               optionIdx={optionIdx}
@@ -403,7 +403,7 @@ export default function Product() {
                       </h3>
                       <Disclosure.Panel className="pt-6">
                         <div className="space-y-4">
-                          {filters[2].options.map((option, optionIdx) => (
+                          {filters[1].options.map((option, optionIdx) => (
                             <CheckboxComponent
                               option={option}
                               optionIdx={optionIdx}
