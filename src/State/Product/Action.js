@@ -1,4 +1,5 @@
-import { api } from "../../Config/apiConfig";
+import axios from "axios";
+import { API_BASE_URL, api } from "../../Config/apiConfig";
 import {
   FIND_PRODUCTS_FAILURE,
   FIND_PRODUCTS_REQUEST,
@@ -20,8 +21,8 @@ export const findProducts = (reqData) => async (dispatch) => {
     reqData;
 
   try {
-    const { data } = await api.get(
-      `/api/products/?minPrice=${minPrice}&maxPrice=${maxPrice}&category=${category}&stock=${stock}&sort=${sort}&pageNumber=${pageNumber}&pageSize=${pageSize}`
+    const { data } = await axios.get(
+      `${API_BASE_URL}/api/products/?minPrice=${minPrice}&maxPrice=${maxPrice}&category=${category}&stock=${stock}&sort=${sort}&pageNumber=${pageNumber}&pageSize=${pageSize}`
     );
     dispatch({
       type: FIND_PRODUCTS_SUCCESS,
@@ -41,12 +42,11 @@ export const findProductsById = (reqData) => async (dispatch) => {
   });
   const { pid } = reqData;
   try {
-    const { data } = await api.get(`/api/products/${pid}`);
+    const { data } = await axios.get(`${API_BASE_URL}/api/products/${pid}`);
     dispatch({
       type: FIND_PRODUCT_BY_ID_SUCCESS,
       payload: data,
     });
-    console.log("----------", data);
   } catch (error) {
     dispatch({
       type: FIND_PRODUCT_BY_ID_FAILURE,
@@ -60,8 +60,7 @@ export const findAllProducts = () => async (dispatch) => {
     type: FIND_ALL_PRODUCTS_REQUEST,
   });
   try {
-    const { data } = await api.get(`/api/products/`);
-    console.log(data);
+    const { data } = await axios.get(`${API_BASE_URL}/api/products/`);
     dispatch({
       type: FIND_ALL_PRODUCTS_SUCCESS,
       payload: data,
