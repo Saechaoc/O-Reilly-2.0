@@ -34,7 +34,7 @@ export const getProductRating = (reqData) => async (dispatch) => {
   });
 
   try {
-    const { data } = await api.get(`/api/ratings/product/${reqData.pid}`);
+    const { data } = await api.get(`/api/ratings/product/${reqData}`);
 
     dispatch({
       type: GET_PRODUCT_RATING_SUCCESS,

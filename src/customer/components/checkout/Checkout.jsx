@@ -8,6 +8,7 @@ import Typography from "@mui/material/Typography";
 import { useLocation, useNavigate } from "react-router-dom";
 import DeliveryAddressForm from "./DeliveryAddressForm";
 import OrderSummary from "./OrderSummary";
+import LoadStripeCheckout from "./LoadStripeCheckout";
 
 const steps = ["Login", "Add Shipping Address", "Order Summary", "Payment"];
 
@@ -17,6 +18,8 @@ function Checkout() {
   const location = useLocation();
   const querySearch = new URLSearchParams(location.search);
   const step = parseInt(querySearch.get("step")) || 0;
+  const searchParams = new URLSearchParams(location.search);
+  const orderId = searchParams.get("order_id");
 
   React.useEffect(() => {
     setActiveStep(step);
@@ -25,13 +28,14 @@ function Checkout() {
   const handleNext = () => {
     const nextStep = activeStep + 1;
     setActiveStep(nextStep);
+    console.log(nextStep);
     navigate(`?step=${nextStep}`);
   };
 
   const handleBack = () => {
     const prevStep = activeStep - 1;
     setActiveStep(prevStep);
-    navigate(`?step=${prevStep}`);
+    navigate(`?step=${prevStep}&order_id=${orderId}`);
   };
 
   return (
@@ -67,12 +71,18 @@ function Checkout() {
               </Button>
               <Box sx={{ flex: "1 1 auto" }} />
 
-              <Button onClick={handleNext}>
+              {/* <Button onClick={handleNext}>
                 {activeStep === steps.length - 1 ? "Finish" : "Next"}
-              </Button>
+              </Button> */}
             </Box>
             <div className="mt-10">
-              {activeStep === 1 ? <DeliveryAddressForm /> : <OrderSummary />}
+              {activeStep === steps.length - 1 ? (
+                <LoadStripeCheckout />
+              ) : activeStep === 1 ? (
+                <DeliveryAddressForm />
+              ) : (
+                <OrderSummary />
+              )}
             </div>
           </React.Fragment>
         )}

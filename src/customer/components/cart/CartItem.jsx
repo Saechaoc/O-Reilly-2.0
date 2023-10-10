@@ -8,7 +8,7 @@ import {
 } from "../../../State/Cart/Action";
 import CartQtyContainer from "../../cart-qty/CartQtyContainer";
 
-const CartItem = ({ cartItem }) => {
+const CartItem = ({ cartItem, disabled = false }) => {
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.auth.user);
 
@@ -37,7 +37,7 @@ const CartItem = ({ cartItem }) => {
         <div className="w-[5rem] h-[5rem] lg:w-[9rem] lg:h-[9rem]">
           <img
             className="flex justify-center items-center w-full h-full object-fill object-top"
-            src="https://images.oreillyauto.com/parts/img/large/lis/18980.jpg"
+            src={cartItem?.product?.imageUrl}
             alt=""
           ></img>
         </div>
@@ -64,6 +64,7 @@ const CartItem = ({ cartItem }) => {
           <CartQtyContainer
             initialQuantity={cartItem.quantity}
             onQuantityChange={handleQuantityChange}
+            disabled={disabled}
           />
         </div>
         <div>
@@ -71,6 +72,7 @@ const CartItem = ({ cartItem }) => {
             className="pt-10"
             sx={{ fontSize: "16px", color: "#067d35" }}
             onClick={handleItemRemoved}
+            disabled={disabled}
           >
             Remove
           </Button>

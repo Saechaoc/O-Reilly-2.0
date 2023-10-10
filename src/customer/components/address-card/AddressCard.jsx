@@ -8,8 +8,10 @@ const AddressCard = ({ address }) => {
           {address?.firstName + " " + address?.lastName}
         </p>
         <p>
-          {address?.city}, {address?.state}, {address?.streetAddress},{" "}
-          {address?.zipCode}
+          {address?.streetAddress}
+          <p>
+            {address?.city}, {address?.state} {address?.zipCode}
+          </p>
         </p>
         <div className="space-y-1">
           <p className="font-semibold">Phone Number</p>

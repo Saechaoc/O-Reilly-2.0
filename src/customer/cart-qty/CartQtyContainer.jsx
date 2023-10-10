@@ -1,19 +1,25 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
-const CartQtyContainer = ({ initialQuantity, onQuantityChange }) => {
+const CartQtyContainer = ({
+  initialQuantity,
+  onQuantityChange,
+  disabled = false,
+}) => {
   const [quantity, setQuantity] = useState(initialQuantity);
   useEffect(() => {
     setQuantity(initialQuantity);
   }, [initialQuantity]);
 
   const handleIncrease = () => {
-    setQuantity((prevQuantity) => prevQuantity + 1);
-    onQuantityChange(quantity + 1);
+    if (!disabled) {
+      setQuantity((prevQuantity) => prevQuantity + 1);
+      onQuantityChange(quantity + 1);
+    }
   };
 
   const handleDecrease = () => {
-    if (quantity > 1) {
+    if (!disabled && quantity > 1) {
       setQuantity((prevQuantity) => prevQuantity - 1);
       onQuantityChange(quantity - 1);
     }
@@ -32,6 +38,7 @@ const CartQtyContainer = ({ initialQuantity, onQuantityChange }) => {
             type="button"
             className="w-10 h-10 leading-10 text-gray-600 transition hover:opacity-75"
             onClick={handleDecrease}
+            disabled={disabled}
           >
             -
           </button>
@@ -47,6 +54,7 @@ const CartQtyContainer = ({ initialQuantity, onQuantityChange }) => {
             type="button"
             className="w-10 h-10 leading-10 text-gray-600 transition hover:opacity-75"
             onClick={handleIncrease}
+            disabled={disabled}
           >
             +
           </button>

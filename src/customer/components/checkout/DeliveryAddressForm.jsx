@@ -1,5 +1,5 @@
 import { Box, Button, Grid, TextField } from "@mui/material";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import AddressCard from "../address-card/AddressCard";
 import { useDispatch, useSelector } from "react-redux";
 import { createOrder, getOrder } from "../../../State/Order/Action";
@@ -8,11 +8,33 @@ import { useNavigate } from "react-router-dom";
 const DeliveryAddressForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const defaultShippingAddress = {
+    id: "",
+    firstName: "",
+    lastName: "",
+    streetAddress: "",
+    city: "",
+    state: "",
+    zipCode: "",
+    mobile: "",
+  };
   const order = useSelector((store) => store.order);
+  const [shippingAddress, setShippingAddress] = useState(null);
+  const [shippingAddressLeft, setShippingAddressLeft] = useState(null);
+
+  useEffect(() => {
+    const localStorageAddress = localStorage.getItem("address");
+    if (localStorageAddress !== null) {
+      const unwrappedAddress = JSON.parse(localStorageAddress);
+      setShippingAddressLeft(unwrappedAddress.address);
+    }
+    setShippingAddress(defaultShippingAddress);
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
+
     const address = {
       firstName: data.get("firstName"),
       lastName: data.get("lastName"),
@@ -24,8 +46,12 @@ const DeliveryAddressForm = () => {
     };
     const orderData = { address, navigate };
     dispatch(createOrder(orderData));
+    localStorage.setItem("address", JSON.stringify(orderData));
   };
 
+  if (shippingAddress === null) {
+    return <div></div>;
+  }
   return (
     <div>
       <Grid container spacing={4}>
@@ -34,16 +60,20 @@ const DeliveryAddressForm = () => {
           lg={5}
           className="border rounded-e-md shadow-md h-[30.5rem] overflow-y-scroll"
         >
-          {order?.order?.shippingAddress ? (
+          {shippingAddressLeft ? (
             <div className="p-5 py-7 border-b cursor-pointer">
-              <AddressCard address={order?.order?.shippingAddress} />
+              <AddressCard address={shippingAddressLeft} />
               <Button
                 sx={{ mt: 2, bgcolor: "rgb(6, 125, 53)" }}
                 size="large"
                 variant="contained"
-                onClick={() =>
-                  navigate(`/checkout?step=2&order_id=${order?.order?.id}`)
-                }
+                onClick={() => {
+                  const address = shippingAddressLeft;
+
+                  const orderData = { address, navigate };
+                  dispatch(createOrder(orderData));
+                  // navigate(`/checkout?step=2&order_id=${order?.order?.id}`);
+                }}
               >
                 Deliver Here
               </Button>
@@ -63,7 +93,14 @@ const DeliveryAddressForm = () => {
                     name="firstName"
                     label="First Name"
                     fullWidth
-                    autoComplete="given-name"
+                    onChange={(e) => {
+                      const updatedOrder = {
+                        ...shippingAddress,
+                        firstName: e.target.value,
+                      };
+                      setShippingAddress(updatedOrder);
+                    }}
+                    value={shippingAddress.firstName}
                   ></TextField>
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -73,7 +110,14 @@ const DeliveryAddressForm = () => {
                     name="lastName"
                     label="Last Name"
                     fullWidth
-                    autoComplete="given-name"
+                    onChange={(e) => {
+                      const updatedOrder = {
+                        ...shippingAddress,
+                        lastName: e.target.value,
+                      };
+                      setShippingAddress(updatedOrder);
+                    }}
+                    value={shippingAddress.lastName}
                   ></TextField>
                 </Grid>
                 <Grid item xs={12}>
@@ -83,7 +127,14 @@ const DeliveryAddressForm = () => {
                     name="address"
                     label="Address"
                     fullWidth
-                    autoComplete="address"
+                    onChange={(e) => {
+                      const updatedOrder = {
+                        ...shippingAddress,
+                        streetAddress: e.target.value,
+                      };
+                      setShippingAddress(updatedOrder);
+                    }}
+                    value={shippingAddress.streetAddress}
                     multiline
                     rows={4}
                   ></TextField>
@@ -95,7 +146,14 @@ const DeliveryAddressForm = () => {
                     name="City"
                     label="City"
                     fullWidth
-                    autoComplete="City"
+                    onChange={(e) => {
+                      const updatedOrder = {
+                        ...shippingAddress,
+                        city: e.target.value,
+                      };
+                      setShippingAddress(updatedOrder);
+                    }}
+                    value={shippingAddress.city}
                   ></TextField>
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -105,7 +163,14 @@ const DeliveryAddressForm = () => {
                     name="State"
                     label="State"
                     fullWidth
-                    autoComplete="State"
+                    onChange={(e) => {
+                      const updatedOrder = {
+                        ...shippingAddress,
+                        state: e.target.value,
+                      };
+                      setShippingAddress(updatedOrder);
+                    }}
+                    value={shippingAddress.state}
                   ></TextField>
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -115,7 +180,14 @@ const DeliveryAddressForm = () => {
                     name="Zip"
                     label="Zip"
                     fullWidth
-                    autoComplete="Zip"
+                    onChange={(e) => {
+                      const updatedOrder = {
+                        ...shippingAddress,
+                        zip: e.target.value,
+                      };
+                      setShippingAddress(updatedOrder);
+                    }}
+                    value={shippingAddress.zip}
                   ></TextField>
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -125,7 +197,14 @@ const DeliveryAddressForm = () => {
                     name="phoneNumber"
                     label="Phone Number"
                     fullWidth
-                    autoComplete="Phone Number"
+                    onChange={(e) => {
+                      const updatedOrder = {
+                        ...shippingAddress,
+                        mobile: e.target.value,
+                      };
+                      setShippingAddress(updatedOrder);
+                    }}
+                    value={shippingAddress.mobile}
                   ></TextField>
                 </Grid>
                 <Grid item xs={12} sm={6}>

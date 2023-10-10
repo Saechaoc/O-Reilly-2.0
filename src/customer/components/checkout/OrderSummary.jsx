@@ -3,11 +3,12 @@ import AddressCard from "../address-card/AddressCard";
 import CartItem from "../cart/CartItem";
 import { useDispatch, useSelector } from "react-redux";
 import { getCart } from "../../../State/Cart/Action";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { getOrder } from "../../../State/Order/Action";
 
 const OrderSummary = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const order = useSelector((store) => store.order);
   const cart = useSelector((store) => store.cart);
   const cartItems = useSelector((store) => store.cart.cartItems);
@@ -24,6 +25,9 @@ const OrderSummary = () => {
     dispatch(getOrder(orderId));
   }, [dispatch, orderId]);
 
+  const handleCheckout = () => {
+    navigate(`/checkout?step=3&order_id=${orderId}`);
+  };
   console.log(order);
   return (
     <div>
@@ -53,6 +57,7 @@ const OrderSummary = () => {
               variant="contained"
               type="submit"
               aria-label="Checkout"
+              onClick={handleCheckout}
             >
               Place your order
             </button>

@@ -10,13 +10,15 @@ const Cart = () => {
   const cart = useSelector((store) => store.cart);
   const cartItems = useSelector((store) => store.cart.cartItems);
   const cartUpdated = useSelector((store) => store.cart.cartUpdated);
+  const order = useSelector((store) => store.order);
+  console.log(order);
 
   console.log("Cart -----------", cart);
   console.log("Cart Items -----------", cartItems);
   // console.log("Cart Updated -----------", cartUpdated);
 
   const handleCheckout = () => {
-    navigate("/checkout?step=1");
+    navigate(`/checkout?step=1`);
   };
 
   //TODO: This is re-rendering the page which is causing the items to shuffle
@@ -26,11 +28,6 @@ const Cart = () => {
       dispatch(getCart());
     }
   }, [dispatch, cartUpdated, cart.removeCartItem, cart.updateCartItem]);
-
-  // useEffect(() => {
-  //   // console.log("Cart updated", cartUpdated);
-  //   dispatch(getCart());
-  // }, [cart.updateCartItem, cart.removeCartItem]);
 
   return (
     <div>

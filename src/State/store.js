@@ -4,7 +4,7 @@ import { authReducer } from "./Auth/Reducer";
 import { cartReducer } from "./Cart/Reducer";
 import { orderReducer } from "./Order/Reducer";
 import { customerProductReducer } from "./Product/Reducer";
-import { ratingReducer } from "./Reviews/Reducer";
+import { ratingReducer } from "./Ratings/Reducer";
 
 const rootReducers = combineReducers({
   auth: authReducer,

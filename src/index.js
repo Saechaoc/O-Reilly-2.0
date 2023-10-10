@@ -6,16 +6,17 @@ import App from "./App";
 import { store } from "./State/store";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
+import { createRoot } from "react-dom/client";
 
 const rootElement = document.getElementById("root");
+const root = createRoot(rootElement);
 
-ReactDOM.render(
+root.render(
   <BrowserRouter>
     <Provider store={store}>
       <App />
     </Provider>
-  </BrowserRouter>,
-  rootElement
+  </BrowserRouter>
 );
 
 // If you want to start measuring performance in your app, pass a function
