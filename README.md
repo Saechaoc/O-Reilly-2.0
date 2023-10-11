@@ -21,6 +21,15 @@ An e-commerce platform inspired by O'Reilly, implemented using Spring Boot and S
 # Overview
 This project is using an N-tier architecture, which divides the application into three logical layers: the presentation layer, the business layer, and the data layer. The presentation layer handles the user interface and interactions, while the business layer implements the application's logic and processes, and the data layer stores and retrieves data. By separating these layers, we can create a flexible and modular system that's easier to develop, test, and maintain.
 
+## Sign In
+![Animation](https://github.com/Saechaoc/O-Reilly-2.0/assets/23547811/e4f18411-b527-4dbc-822e-1e177b4b5974)
+
+## Add Item To Cart
+![Add Item To Cart](https://github.com/Saechaoc/O-Reilly-2.0/assets/23547811/add5b5ff-a862-4882-ae4e-5f20852be552)
+
+## Checkout
+![Checkout](https://github.com/Saechaoc/O-Reilly-2.0/assets/23547811/a01b1fd8-e8c0-4af0-8e86-78dfbf3600ae)
+
 # System Architecture
 ## System Diagram
 * Application Layer: Manages API endpoints and HTTP request handling.
