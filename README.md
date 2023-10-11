@@ -59,6 +59,7 @@ This project is using an N-tier architecture, which divides the application into
     * Ensure all items, quantities, and pricing are correct.
 3. Payment:
     * Select a payment method and enter the necessary payment details.
+        * You can use a real credit card and pay me or use a test CC with the number 4242 4242 4242 4242
     * Click on "Submit Payment" to finalize your purchase.
 
 ![Checkout](https://github.com/Saechaoc/O-Reilly-2.0/assets/23547811/a01b1fd8-e8c0-4af0-8e86-78dfbf3600ae)
