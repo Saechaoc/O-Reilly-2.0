@@ -21,13 +21,46 @@ An e-commerce platform inspired by O'Reilly, implemented using Spring Boot and S
 # Overview
 This project is using an N-tier architecture, which divides the application into three logical layers: the presentation layer, the business layer, and the data layer. The presentation layer handles the user interface and interactions, while the business layer implements the application's logic and processes, and the data layer stores and retrieves data. By separating these layers, we can create a flexible and modular system that's easier to develop, test, and maintain.
 
-## Sign In
-![Animation](https://github.com/Saechaoc/O-Reilly-2.0/assets/23547811/e4f18411-b527-4dbc-822e-1e177b4b5974)
+## Sign In or Register
+1. Sign In:
+    * Click on the "Sign In" button.
+    * Enter your username in the "email" field.
+    * Enter your password in the "password" field.
+    * Click on the "Login" button.
+
+2. Register:
+    * If you're a new user, click on the "Register" option.
+    * Fill in the required details to create a new account.
+    * Click on the "Register" button to complete the registration process.
+
+![image](https://github.com/Saechaoc/O-Reilly-2.0/assets/23547811/21dcdfc1-d244-47f7-8cd2-ac02de2ab926)
 
 ## Add Item To Cart
-![Add Item To Cart](https://github.com/Saechaoc/O-Reilly-2.0/assets/23547811/add5b5ff-a862-4882-ae4e-5f20852be552)
+1. Select a Category:
+    * Navigate through the website using the drop-down navigation menu.
+    * Select a desired category to explore items.
+2. Add Items to Cart:
+    * Browse through the items and select one that you wish to purchase.
+    * Click on the "Add to Cart" button.
+3. Manage Cart:
+    * Visit the cart page to view selected items.
+    * Adjust the quantity of the items or remove items as per your need.
+
+![image](https://github.com/Saechaoc/O-Reilly-2.0/assets/23547811/e84272fd-fd58-4aac-a9e9-b6502e3c867c)
+![image](https://github.com/Saechaoc/O-Reilly-2.0/assets/23547811/6a769ed7-92cb-4370-b681-61f920dbf9aa)
+![image](https://github.com/Saechaoc/O-Reilly-2.0/assets/23547811/a6c3e15d-67a4-4489-86a9-46f9e25f401b)
 
 ## Checkout
+1. Enter Address Information:
+    * On the checkout page, fill in your address details.
+    * Click on "Deliver Here" after ensuring the address is correct.
+2. Order Confirmation:
+    * Review and confirm the details of your order.
+    * Ensure all items, quantities, and pricing are correct.
+3. Payment:
+    * Select a payment method and enter the necessary payment details.
+    * Click on "Submit Payment" to finalize your purchase.
+
 ![Checkout](https://github.com/Saechaoc/O-Reilly-2.0/assets/23547811/a01b1fd8-e8c0-4af0-8e86-78dfbf3600ae)
 
 # System Architecture
