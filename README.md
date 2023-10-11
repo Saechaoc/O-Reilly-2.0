@@ -296,3 +296,42 @@ erDiagram
     order_item ||--o{ product : "belongs_to"
 
 ```
+# Learnings
+## Java
+
+### Controllers
+* Controllers should be as thin as possible, and they should only call at most one service layer method and not catch or throw exceptions.
+* Delegate response code and error message responsibilities to a global exception handler. Exceptions should be called from the service layer which is intercepted by Spring exception handlers (ex: ControllerAdvice) where exceptions are then transformed into HTTP responses and returned to the client.
+* Do not add business logic to this layer or have multiple calls within an endpoint, this is easier for testing purposes
+* Validate input received in the request to ensure it is valid and meets the expected format.
+
+### Services
+* Modularity and reusability are key.
+* Logging and HTTP responses should NOT be handled in the service layer. They should use exception propoagation to relay errors to the controller layer for proper logging and HTTP response translation.
+* Exception handling should generally follow two rules:
+    1. Some sort of recovery logic
+    2. throw an api level exception to be handled by the controller layer
+* Use DTOs to transfer data between the controller and the service. This helps keep the service layer decoupled from the controller layer and allows for better control over the data being transferred.
+
+Ex: Propagating exceptions in the service layer
+           
+           @Service
+           public class orderService {
+                @Autowired
+                private orderRepository orderRepository;
+
+                pulbic Order createOrder(Order order) {
+                    try {
+                        Order createOrder = orderRepository.save(order);
+                    } catch (specificException e) {
+                        throw new ClientErrorException("Order already exists");
+                    }
+                }
+           }
+### Models
+* They represent the data used by the service layer. Don't prematurely handle exceptions here.
+* The only exceptions the model should handle are related to DB access. Propoage all other exceptions to the service layer.
+* Use flyaway or something else for DB versioning for long term maintainability
+
+### Client Libraries
+* HTTP response codes should be converted into java exception types so the caller can hanlde the possible reponses a client call can return.
