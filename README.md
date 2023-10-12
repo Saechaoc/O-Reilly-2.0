@@ -335,3 +335,11 @@ Ex: Propagating exceptions in the service layer
 
 ### Client Libraries
 * HTTP response codes should be converted into java exception types so the caller can hanlde the possible reponses a client call can return.
+
+
+# Frontend
+* Use localstorage/ sessionStorage / caching
+* Minimize the amount of DB calls you need to make, networking limitations are real
+* Managing state can be challenging, especially when you have lots of child components
+* UseEffect is very commonly misused and error prone, there are lots of async calls which can be difficult to pin down, so you need to hanlde various states.
+* Always check if the data structures (like arrays or objects) you're working with exist and have the expected format before performing operations on them. Functions like .map, .filter, and .reduce can throw errors if not used on actual arrays.
