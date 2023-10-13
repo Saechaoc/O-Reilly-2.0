@@ -296,8 +296,60 @@ erDiagram
     order_item ||--o{ product : "belongs_to"
 
 ```
-# Learnings
-## Java
+# Lessons Learned
+
+## Problems encountered
+### Frontend Development and Design Choices
+* **Rapid Development Consequences**: 
+    * Quick design choices for speedy app development led to intricate debugging due to runtime issues.
+    * **Learning**: Embrace a "think twice, code once" mindset.
+* **Usage of useEffect and React.StrictMode**: 
+    * Challenges with doubled component loads and subsequent dual database calls.
+    * **Learning**: Utilize loading states/spinners to manage null states and enhance UX.
+* **State Management and Child Components**: 
+    * Struggles in managing multiple states and effective use of child components.
+    * **Learning**: Explore using session or local storage as alternatives or supplements to Redux states.
+* **Props Passing to Child Components**: 
+    * Faced re-renders and bugs due to unnecessary prop passing through component chains.
+* **Product Catalog Fetching**: 
+    * Direct fetching from the database led to redundant data retrieval.
+    * **Learning**: Employ caching mechanisms for optimized data fetching.
+* **Z-Index Issues in UI**: 
+    * Confronted issues with z-index values from various packages.
+    * **Learning**: Gain a thorough understanding of third-party libraries to manage conflicts effectively.
+
+### Gradle Build and Deployment Issues
+* **Gradle Commands and Dependency Refresh**: 
+    * Manual refreshing in IntelliJ was required for expected dependency refresh.
+* **Deployment Configuration Challenges**: 
+    * **Learning**: Ensure tailored configurations per environment for seamless deployment.
+* **CORS Filters**: 
+    * Realized the crucial impact of the sequential arrangement of CORS filters.
+
+### Database Schema Creation and Management
+* **Runtime Errors with Foreign Key Constraints**: 
+    * Faced runtime errors related to Foreign Key constraints during schema changes.
+    * **Learning**: Consider using Flyaway or Liquibase for efficient database schema updates in production.
+* **Incremental Development and Testing**: 
+    * **Learning**: Adopt a methodology of building and testing each feature incrementally.
+* **Database Interaction Issues**: 
+    * Encountered various database-related issues, like `HttpMessageNotWritableException`.
+    * **Learning**: Utilize DTOs to manage dependency cycles and mitigate initialization issues.
+
+### Development Workflow and Testing
+* **Package Detection through Component Scanning**: 
+    * Issues with package detection during component scanning due to package structures.
+    * **Learning**: Ensure logical package structures for flawless component scanning.
+
+### Debugging and Issue Tracing
+* **Proactive Logging**: 
+    * Lack of a proactive logging strategy hindered efficient debugging.
+    * **Learning**: Implement comprehensive logging from the development onset.
+* **Availability of API Endpoints**: 
+    * Restricted API testing due to limited endpoint availability.
+    * **Learning**: Develop a robust set of API endpoints for versatile application interactions.
+
+## What I would do differently
 
 ### Controllers
 * Controllers should be as thin as possible, and they should only call at most one service layer method and not catch or throw exceptions.
@@ -336,10 +388,9 @@ Ex: Propagating exceptions in the service layer
 ### Client Libraries
 * HTTP response codes should be converted into java exception types so the caller can hanlde the possible reponses a client call can return.
 
-
-# Frontend
+### Frontend
 * Use localstorage/ sessionStorage / caching
 * Minimize the amount of DB calls you need to make, networking limitations are real
-* Managing state can be challenging, especially when you have lots of child components
-* UseEffect is very commonly misused and error prone, there are lots of async calls which can be difficult to pin down, so you need to hanlde various states.
-* Always check if the data structures (like arrays or objects) you're working with exist and have the expected format before performing operations on them. Functions like .map, .filter, and .reduce can throw errors if not used on actual arrays.
+* Continously deploy changes - something might work in a dev environment but not another
+* Take the time to test early and test often
+* Create wireframes for what user flows and user interactions should occur - when building on the fly you will miss these 
